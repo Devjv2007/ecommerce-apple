@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scrollbar preta, fundo branco, sem setas */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Remove todas as setas/botões */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox - automaticamente não mostra setas com scrollbar-width: thin */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #000000 #ffffff;
+}
+

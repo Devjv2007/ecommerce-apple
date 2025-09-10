@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model usuarios {
+  id           Int      @id @default(autoincrement())
+  nome         String
+  email        String   @unique
+  senha_hash   String
+  data_criacao DateTime @default(now())
+  
+  // Relacionamentos
+  carrinhos    carrinho[]
+  pedidos      Pedido[]
+}
+
+model produtos {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  descricao  String?
+  preco      Decimal
+  imagem_url String?
+  imagem_2   String?
+  imagem_3   String?
+  imagem_4   String?
+  imagem_5   String?
+  
+  // Relacionamento
+  carrinhos  carrinho[]
+}
+
+model carrinho {
+  id         Int      @id @default(autoincrement())
+  usuario_id Int      
+  produto_id Int      
+  quantidade Int      @default(1)
+  data_adicao DateTime @default(now())
+  
+  // Relacionamentos
+  usuario  usuarios @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+  produto  produtos @relation(fields: [produto_id], references: [id], onDelete: Cascade)
+  
+  @@unique([usuario_id, produto_id])
+}
+
+model Pedido {
+  id              Int      @id @default(autoincrement())
+  usuario_id      Int
+  data_pedido     DateTime @default(now())
+  status          String   @default("pendente")
+  subtotal        Float
+  valor_frete     Float
+  total           Float
+  metodo_pagamento String?
+  
+  endereco_cep        String
+  endereco_logradouro String
+  endereco_bairro     String
+  endereco_cidade     String
+  endereco_uf         String
+  
+  frete_transportadora String
+  frete_prazo         String
+  
+  // Relacionamento
+  usuario usuarios @relation(fields: [usuario_id], references: [id])
+  
+  @@map("pedidos")
+}
