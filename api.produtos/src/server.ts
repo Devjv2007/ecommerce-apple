@@ -452,6 +452,18 @@ app.delete('/carrinho', verificarToken, async (req: AuthRequest, res: Response) 
 
 const port = Number(process.env.PORT) || 3000
 
+app.get('/', (_req: Request, res: Response) => {
+  res.json({ 
+    message: 'API eCommerce Apple Online',
+    endpoints: {
+      produtos: '/produtos',
+      health: '/health',
+      usuarios: '/usuarios',
+      carrinho: '/carrinho'
+    }
+  })
+})
+
 app.listen(port, '0.0.0.0', () => {
-  console.log(`API rodando em: http://192.168.15.167:${port}`)
+  console.log(`API rodando em: http://ecommerce-apple.onrender.com/:${port}`)
 })

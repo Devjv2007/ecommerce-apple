@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,67 +8,45 @@ datasource db {
 }
 
 model usuarios {
-  id           Int      @id @default(autoincrement())
-  nome         String
-  email        String   @unique
+  id           Int       @id @default(autoincrement())
+  nome         String    @db.VarChar(100)
+  email        String    @unique @db.VarChar(150)
   senha_hash   String
-  data_criacao DateTime @default(now())
-  
-  // Relacionamentos
-  carrinhos    carrinho[]
+  data_criacao DateTime? @default(now()) @db.Timestamp(6)
   pedidos      Pedido[]
 }
 
 model produtos {
   id         Int      @id @default(autoincrement())
-  nome       String
+  nome       String   @db.VarChar(50)
   descricao  String?
-  preco      Decimal
+  preco      Decimal  @db.Decimal(10, 2)
   imagem_url String?
+  createdAt  DateTime @default(now())
   imagem_2   String?
   imagem_3   String?
   imagem_4   String?
   imagem_5   String?
-  
-  // Relacionamento
-  carrinhos  carrinho[]
-}
-
-model carrinho {
-  id         Int      @id @default(autoincrement())
-  usuario_id Int      
-  produto_id Int      
-  quantidade Int      @default(1)
-  data_adicao DateTime @default(now())
-  
-  // Relacionamentos
-  usuario  usuarios @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
-  produto  produtos @relation(fields: [produto_id], references: [id], onDelete: Cascade)
-  
-  @@unique([usuario_id, produto_id])
+  updatedAt  DateTime @default(now())
 }
 
 model Pedido {
-  id              Int      @id @default(autoincrement())
-  usuario_id      Int
-  data_pedido     DateTime @default(now())
-  status          String   @default("pendente")
-  subtotal        Float
-  valor_frete     Float
-  total           Float
-  metodo_pagamento String?
-  
-  endereco_cep        String
-  endereco_logradouro String
-  endereco_bairro     String
-  endereco_cidade     String
-  endereco_uf         String
-  
-  frete_transportadora String
-  frete_prazo         String
-  
-  // Relacionamento
-  usuario usuarios @relation(fields: [usuario_id], references: [id])
-  
+  id                   Int      @id @default(autoincrement())
+  usuario_id           Int
+  data_pedido          DateTime @default(now()) @db.Timestamp(6)
+  status               String   @default("pendente") @db.VarChar(255)
+  subtotal             Float
+  valor_frete          Float
+  total                Float
+  metodo_pagamento     String?  @db.VarChar(255)
+  endereco_cep         String   @db.VarChar(255)
+  endereco_logradouro  String   @db.VarChar(255)
+  endereco_bairro      String   @db.VarChar(255)
+  endereco_cidade      String   @db.VarChar(255)
+  endereco_uf          String   @db.VarChar(255)
+  frete_transportadora String   @db.VarChar(255)
+  frete_prazo          String   @db.VarChar(255)
+  usuario              usuarios @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario")
+
   @@map("pedidos")
 }
