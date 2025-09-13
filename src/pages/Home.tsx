@@ -150,7 +150,7 @@ export default function Home() {
     transition={{ duration: 0.6, delay: 0.6 }}
   >
     <Link
-      to="/iphone"
+      to="/macbook"
       className="bg-blue-600 text-white px-7 py-4 rounded-full hover:scale-105 transition-all duration-300 hover:bg-blue-300" 
     >
       Saiba mais
