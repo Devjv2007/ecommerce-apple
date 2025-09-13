@@ -39,7 +39,7 @@ const Account: React.FC = () => {
         setLoading(true)
         console.log(' Buscando pedidos do usuário:', usuario.id)
         
-        const response = await fetch(`http://192.168.15.167:3000/api/pedidos/usuario/${usuario.id}`, {
+        const response = await fetch(`https://ecommerce-apple.onrender.com/api/pedidos/usuario/${usuario.id}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
@@ -175,7 +175,7 @@ const Account: React.FC = () => {
               </div>
             ) : pedidos.length === 0 ? (
               <div className="text-gray-500 text-center py-8">
-                <div className="text-6xl mb-4">📦</div>
+                <div className="text-6xl mb-4"></div>
                 <p className="mb-4">Você ainda não fez nenhum pedido.</p>
                 <p className="text-sm mb-4 text-gray-400">
                   Finalize uma compra no carrinho para ver seus pedidos aqui

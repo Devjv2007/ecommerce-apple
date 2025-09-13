@@ -11,7 +11,7 @@ interface AuthRequest extends Request {
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sua_chave_secreta_aqui'
 
-// MIDDLEWARE DE AUTENTICAÇÃO
+
 const verificarToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
   const token = authHeader && authHeader.split(' ')[1]
@@ -29,7 +29,7 @@ const verificarToken = (req: AuthRequest, res: Response, next: NextFunction) => 
   }
 }
 
-// BUSCAR PEDIDOS POR USUÁRIO
+
 router.get('/usuario/:id', async (req: Request, res: Response) => {
   try {
     const pedidos = await prisma.pedido.findMany({
@@ -44,13 +44,12 @@ router.get('/usuario/:id', async (req: Request, res: Response) => {
   }
 })
 
-// CRIAR PEDIDO (CONECTADO COM O FRONTEND)
+
 router.post('/', verificarToken, async (req: AuthRequest, res: Response) => {
   try {
-    console.log('🔐 Usuário autenticado:', req.usuario)
-    console.log('📦 Dados recebidos do frontend:', req.body)
-    
-    // DADOS QUE VÊM DO FRONTEND:
+    console.log(' Usuário autenticado:', req.usuario)
+    console.log(' Dados recebidos do frontend:', req.body)
+
     const {
       subtotal,
       valor_frete,
@@ -65,9 +64,9 @@ router.post('/', verificarToken, async (req: AuthRequest, res: Response) => {
       status
     } = req.body
 
-    // CRIA O PEDIDO COM O ID DO USUÁRIO DO TOKEN
+   
     const dadosPedido = {
-      usuario_id: req.usuario.id, // ID vem do token JWT
+      usuario_id: req.usuario.id,
       subtotal: parseFloat(subtotal),
       valor_frete: parseFloat(valor_frete),
       total: parseFloat(total),
@@ -81,21 +80,21 @@ router.post('/', verificarToken, async (req: AuthRequest, res: Response) => {
       status: status || 'processando'
     }
 
-    console.log('💾 Salvando no banco:', dadosPedido)
+    console.log(' Salvando no banco:', dadosPedido)
 
     const pedido = await prisma.pedido.create({
       data: dadosPedido
     })
     
-    console.log('✅ Pedido criado com ID:', pedido.id)
+    console.log(' Pedido criado com ID:', pedido.id)
     res.status(201).json({ pedido })
   } catch (error) {
-    console.error('💥 Erro ao criar pedido:', error)
+    console.error(' Erro ao criar pedido:', error)
     res.status(500).json({ erro: 'Erro ao criar pedido', details: error })
   }
 })
 
-// ATUALIZAR PAGAMENTO
+
 router.put('/:id/pagamento', async (req: Request, res: Response) => {
   try {
     const { status, metodoPagamento } = req.body
@@ -115,7 +114,6 @@ router.put('/:id/pagamento', async (req: Request, res: Response) => {
   }
 })
 
-// ATUALIZAR PEDIDO GERAL
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const { status, metodo_pagamento } = req.body

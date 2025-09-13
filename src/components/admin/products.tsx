@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://192.168.15.167:3000/produtos');
+      const response = await fetch('https://ecommerce-apple.onrender.com/produtos');
       if (response.ok) {
         const data = await response.json();
         setProducts(data);
@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
           imagem_5: formData.imagem_5 || null
         };
 
-        const response = await fetch('http://192.168.15.167:3000/produtos', {
+        const response = await fetch('https://ecommerce-apple.onrender.com/produtos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSend)
@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
           imagem_5: formData.imagem_5 || null
         };
 
-        const response = await fetch(`http://192.168.15.167:3000/produtos/${editingProduct.id}`, {
+        const response = await fetch(`https://ecommerce-apple.onrender.com/produtos/${editingProduct.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSend)
@@ -125,7 +125,7 @@ const Dashboard: React.FC = () => {
   const deleteProduct = async (id: number, nome: string) => {
     if (confirm(`Tem certeza que deseja excluir "${nome}"?\n\nEsta ação não pode ser desfeita!`)) {
       try {
-        const response = await fetch(`http://192.168.15.167:3000/produtos/${id}`, {
+        const response = await fetch(`https://ecommerce-apple.onrender.com/produtos/${id}`, {
           method: 'DELETE'
         });
 

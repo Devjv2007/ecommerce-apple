@@ -37,7 +37,7 @@ const AdminDashboard: React.FC = () => {
         setLoading(true)
         console.log('Buscando estatísticas do dashboard...')
         
-        const response = await fetch('http://192.168.15.167:3000/api/dashboard/stats', {
+        const response = await fetch('https://ecommerce-apple.onrender.com/api/dashboard/stats', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ const AdminDashboard: React.FC = () => {
     try {
       setUpdating(true)
       
-      const response = await fetch(`http://192.168.15.167:3000/api/pedidos/${pedidoId}`, {
+      const response = await fetch(`https://ecommerce-apple.onrender.com/api/pedidos/${pedidoId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

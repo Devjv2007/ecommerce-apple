@@ -50,7 +50,7 @@ export default function Iphone() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://192.168.15.167:3000/produtos');
+        const response = await fetch('https://ecommerce-apple.onrender.com/produtos');
         if (response.ok) {
           const data = await response.json();
           

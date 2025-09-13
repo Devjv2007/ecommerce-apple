@@ -18,7 +18,7 @@ const AdminUsers: React.FC = () => {
     const fetchUsuarios = async () => {
       try {
         setLoading(true)
-        const response = await fetch('http://192.168.15.167:3000/usuarios', {
+        const response = await fetch('https://ecommerce-apple.onrender.com/usuarios', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'

@@ -38,11 +38,11 @@ export default function Home() {
     <>
       <div className="hidden lg:block">
         <motion.section 
-  className="py-8 flex flex-col items-center text-center gap-6"  // ← Adicione gap-6 aqui
+  className="py-8 flex flex-col items-center text-center gap-6" 
   {...fadeInUp}
 >
   <motion.h1 
-    className="text-6xl font-semibold bg-gradient-to-r from-blue-600 to-gray-400 bg-clip-text text-transparent"  // ← Removi -mt-1
+    className="text-6xl font-semibold bg-gradient-to-r from-blue-600 to-gray-400 bg-clip-text text-transparent" 
     initial={{ opacity: 0, y: -30 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8, delay: 0.2 }}
@@ -66,7 +66,7 @@ export default function Home() {
   >
     <Link
       to="/iphone"
-      className="bg-blue-600 text-white px-7 py-4 rounded-full hover:scale-105 transition-all duration-300 hover:bg-blue-300"  // ← Removi translate-y-6
+      className="bg-blue-600 text-white px-7 py-4 rounded-full hover:scale-105 transition-all duration-300 hover:bg-blue-300" 
     >
       Saiba mais
     </Link>
@@ -123,11 +123,11 @@ export default function Home() {
 
 
 <motion.section 
-  className="py-8 flex flex-col items-center text-center gap-6"  // ← Adicione gap-6 aqui
+  className="py-8 flex flex-col items-center text-center gap-6"  
   {...fadeInUp}
 >
   <motion.h1 
-    className="text-6xl font-semibold bg-gradient-to-r from-black to-gray-400 bg-clip-text text-transparent"  // ← Removi -mt-1
+    className="text-6xl font-semibold bg-gradient-to-r from-black to-gray-400 bg-clip-text text-transparent"  
     initial={{ opacity: 0, y: -30 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8, delay: 0.2 }}
@@ -151,7 +151,7 @@ export default function Home() {
   >
     <Link
       to="/iphone"
-      className="bg-blue-600 text-white px-7 py-4 rounded-full hover:scale-105 transition-all duration-300 hover:bg-blue-300"  // ← Removi translate-y-6
+      className="bg-blue-600 text-white px-7 py-4 rounded-full hover:scale-105 transition-all duration-300 hover:bg-blue-300" 
     >
       Saiba mais
     </Link>
@@ -211,13 +211,6 @@ export default function Home() {
           {...fadeIn}
           transition={{ delay: 2.5 }}
         >
-          <p className="text-justify text-gray-500 px-2 max-w-5xl mx-auto leading-relaxed">
-            ◊ A Apple Intelligence está disponível em versão beta, como parte de uma atualização de software do iOS 18, iPadOS 18 e macOS Sequoia, em todos os modelos de iPhone 16, no iPhone 15 Pro, iPhone 15 Pro Max, iPad mini (A17 Pro) e em modelos de iPad e Mac com chip M1 e posterior, com a Siri e o aparelho configurado no mesmo idioma compatível. Os idiomas compatíveis incluem português (Brasil), inglês, francês, alemão, italiano, espanhol, japonês, coreano e chinês (simplificado). Mais idiomas serão adicionados ao longo do ano, incluindo vietnamita. Alguns recursos podem não estar disponíveis em todas as regiões ou idiomas.
-            1. Os recursos Teste de Audição e Aparelho Auditivo estão disponíveis nos AirPods Pro 2 com o firmware mais recente emparelhados com um iPhone ou iPad compatível, com iOS 18 ou iPadOS 18 e posterior. Os dois recursos são destinados a pessoas com mais de 18 anos. O recurso Aparelho Auditivo também está disponível em um Mac compatível, com macOS Sequoia e posterior. É destinado a pessoas com perda auditiva leve a moderada identificada. Alguns recursos podem não estar disponíveis em todas as regiões ou idiomas. Veja a lista completa. Converse com um profissional de saúde se tiver preocupações sobre sua saúde auditiva.
-            2. Disponíveis em dois modelos: AirPods 4 e AirPods 4 com Cancelamento Ativo de Ruído.
-            É preciso ter uma assinatura do Apple TV+. Aplicam-se outros termos e restrições.
-            Os recursos estão sujeitos a mudanças. Alguns recursos, apps e serviços podem não estar disponíveis em todas as regiões ou idiomas.
-          </p>
         </motion.section>
       </div>
 
@@ -388,9 +381,6 @@ export default function Home() {
             {...fadeIn}
             transition={{ delay: 1.8 }}
           >
-            <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-              ◊ A Apple Intelligence está disponível em versão beta, como parte de uma atualização de software do iOS 18, iPadOS 18 e macOS Sequoia, em todos os modelos de iPhone 16, no iPhone 15 Pro, iPhone 15 Pro Max, iPad mini (A17 Pro) e em modelos de iPad e Mac com chip M1 e posterior, com a Siri e o aparelho configurado no mesmo idioma compatível. Os idiomas compatíveis incluem português (Brasil), inglês, francês, alemão, italiano, espanhol, japonês, coreano e chinês (simplificado). Mais idiomas serão adicionados ao longo do ano, incluindo vietnamita. Alguns recursos podem não estar disponíveis em todas as regiões ou idiomas.
-            </p>
           </motion.section>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { useCart } from '../contexts/CartContext'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import PaymentModal from '../components/PaymentModal'
+import { toast } from 'react-toastify'
 
 type FreteOpcao = {
   transportadora: string
@@ -27,14 +28,20 @@ const Cart: React.FC = () => {
 
   const calcularFrete = async () => {
     if (!cep || cep.length !== 8) {
-      alert("Digite um CEP válido com 8 dígitos.")
+      toast.error("Digite um CEP válido com 8 dígitos.", {
+        position: "top-right",
+        autoClose: 3000,
+      })
       return
     }
     try {
       const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
       const data = await res.json()
       if (data.erro) {
-        alert("CEP inválido!")
+        toast.error("CEP inválido!", {
+          position: "top-right",
+          autoClose: 3000,
+        })
         return
       }
       setEndereco(data)
@@ -44,20 +51,21 @@ const Cart: React.FC = () => {
         { transportadora: "Correios Sedex", valor: 15.50, prazo: "6 dias úteis" }
       ]
       setFrete(freteSimulado)
-      setFreteSelecionado(null) // Limpa seleção ao recalcular
+      setFreteSelecionado(null) 
 
     } catch (err) {
       console.error(err)
-      alert("Erro ao buscar CEP.")
+      toast.error("Erro ao buscar CEP.", {
+        position: "top-right",
+        autoClose: 3000,
+      })
     }
   }
 
-  // FUNÇÃO PRINCIPAL: Criar pedido após pagamento bem-sucedido
   const handlePaymentSuccess = async () => {
     try {
       console.log('Pagamento aprovado! Criando pedido...')
 
-      // Criar pedido na API após pagamento aprovado
       const dadosPedido = {
         usuario_id: usuario?.id,
         subtotal: subtotal,
@@ -73,7 +81,7 @@ const Cart: React.FC = () => {
         status: 'processando'
       }
 
-      const response = await fetch('http://192.168.15.167:3000/api/pedidos', {
+      const response = await fetch('https://ecommerce-apple.onrender.com/api/pedidos', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -91,35 +99,55 @@ const Cart: React.FC = () => {
         }
         
         setIsPaymentModalOpen(false)
-        alert("Pagamento realizado e pedido criado com sucesso!")
-        navigate('/conta')
+        
+        toast.success("Compra realizada com sucesso! Pedido criado e em processamento.", {
+          position: "top-right",
+          autoClose: 5000,
+        })
+        
+        setTimeout(() => {
+          navigate('/conta')
+        }, 2000)
       } else {
         throw new Error('Erro ao criar pedido')
       }
     } catch (error) {
       console.error('Erro ao criar pedido:', error)
-      alert("Erro ao processar pedido. Tente novamente.")
+      toast.error("Erro ao processar pedido. Tente novamente.", {
+        position: "top-right",
+        autoClose: 4000,
+      })
     }
   }
 
   const handleFinalizarCompra = () => {
     if (!freteSelecionado) {
-      alert("Selecione uma opção de frete antes de finalizar a compra.")
+      toast.warning("Selecione uma opção de frete antes de finalizar a compra.", {
+        position: "top-right",
+        autoClose: 3000,
+      })
       return
     }
 
     if (!usuario) {
-      alert("Você precisa estar logado para finalizar a compra.")
-      navigate('/login')
+      toast.error("Você precisa estar logado para finalizar a compra.", {
+        position: "top-right",
+        autoClose: 3000,
+        onClose: () => {
+          navigate('/login')
+        }
+      })
       return
     }
 
     if (!endereco) {
-      alert("Digite seu CEP para calcular o frete.")
+      toast.warning("Digite seu CEP para calcular o frete.", {
+        position: "top-right",
+        autoClose: 3000,
+      })
       return
     }
 
-    // Abrir modal de pagamento
     setIsPaymentModalOpen(true)
   }
 
@@ -153,7 +181,6 @@ const Cart: React.FC = () => {
               />
             ) : (
               <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                {/* Ícone removido */}
               </div>
             )}
             <div className="flex-1">
@@ -176,7 +203,6 @@ const Cart: React.FC = () => {
         </div> 
       ))}
 
-      {/* Área para cálculo de frete */}
       <div className="bg-gray-100 rounded-lg p-6 mt-8">
         <h2 className="text-xl font-semibold mb-4">Calcular Frete</h2>
         <div className="flex gap-2">
@@ -196,14 +222,12 @@ const Cart: React.FC = () => {
           </button>
         </div>
 
-        {/* Exibir endereço encontrado */}
         {endereco && (
           <p className="mt-4 text-gray-700">
             Destino: {endereco.logradouro}, {endereco.bairro}, {endereco.localidade}-{endereco.uf}
           </p>
         )}
 
-        {/* Exibir opções de frete */}
         {frete && (
           <div className="mt-4 space-y-3">
             <h3 className="font-semibold mb-2">Escolha o frete:</h3>
@@ -225,7 +249,6 @@ const Cart: React.FC = () => {
           </div>
         )}
 
-        {/* Resumo do pedido */}
         <div className="bg-white rounded-lg shadow p-6 mt-8">
           <h2 className="text-xl font-semibold mb-4">Resumo do Pedido</h2>
           
@@ -249,7 +272,7 @@ const Cart: React.FC = () => {
 
         <div className="flex justify-center mt-8">
           <button 
-            className="bg-green-600 text-white px-96 py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 transition-all duration-200"
+            className="bg-green-600 text-white px-40 py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 transition-all duration-200"
             disabled={!freteSelecionado}
             onClick={handleFinalizarCompra}
           >
@@ -258,7 +281,6 @@ const Cart: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal de Pagamento */}
       <PaymentModal
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}

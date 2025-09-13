@@ -50,7 +50,7 @@ export default function Iphone() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://192.168.15.167:3000/produtos');
+        const response = await fetch('https://ecommerce-apple.onrender.com/produtos');
         if (response.ok) {
           const data = await response.json();
           
@@ -105,7 +105,7 @@ export default function Iphone() {
           {...fadeInUp}
         >
           <motion.h1 
-            className="text-6xl font-semibold bg-gradient-to-r from-black to-gray-400 bg-clip-text text-transparent -mt-9"
+            className="text-6xl font-semibold bg-gradient-to-r from-blue-300 to-gray-400 bg-clip-text text-transparent -mt-9"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -281,7 +281,7 @@ export default function Iphone() {
             {...fadeInUp}
           >
             <motion.h1 
-              className="text-3xl sm:text-4xl font-semibold bg-gradient-to-r from-black to-gray-400 bg-clip-text text-transparent mb-2"
+              className="text-3xl sm:text-4xl font-semibold bg-gradient-to-r from-blue-500 to-gray-200 bg-clip-text text-transparent mb-2"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}

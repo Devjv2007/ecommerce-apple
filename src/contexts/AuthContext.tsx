@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (email: string, senha: string): Promise<boolean> => {
     setCarregando(true)
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('https://ecommerce-apple.onrender.com/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })

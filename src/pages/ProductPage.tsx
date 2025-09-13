@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useCart } from '../contexts/CartContext';
-// 👇 IMPORTS DO TOASTIFY
 import { toast } from 'react-toastify';
 
 interface ProductType {
@@ -27,7 +26,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://192.168.15.167:3000/produtos/${id}`);
+        const response = await fetch(`https://ecommerce-apple.onrender.com/produtos/${id}`);
         if (response.ok) {
           const data = await response.json();
           setProduct(data);
@@ -66,7 +65,6 @@ const Product = () => {
       ].filter(Boolean)
     : [];
 
-  // 🛒 FUNÇÃO ADICIONAR AO CARRINHO COM TOAST
   const handleAdicionarCarrinho = () => {
     if (product) {
       adicionarAoCarrinho({
@@ -76,7 +74,6 @@ const Product = () => {
         imagem_url: product.imagem_url ?? '',
       });
       
-      // ✅ NOTIFICAÇÃO NO TOPO DIREITO
       toast.success(` ${product.nome} adicionado ao carrinho!`, {
         position: "top-right",
         autoClose: 3000,
@@ -84,7 +81,6 @@ const Product = () => {
     }
   };
 
-  // 🚀 FUNÇÃO COMPRAR COM TOAST
   const handleComprar = () => {
     if (product) {
       adicionarAoCarrinho({
@@ -126,10 +122,9 @@ const Product = () => {
   }
 
   return (
-    <div>
-      {/* LAYOUT DESKTOP - MANTIDO EXATAMENTE IGUAL */}
+    <div className="min-h-screen pb-10 lg:pb-10">
+      {/* Desktop Version */}
       <div className="hidden lg:block">
-        {/* Imagem principal */}
         <section>
           <div className="mx-60 py-16">
             <div className="w-80 h-96 bg-white overflow-hidden">
@@ -142,17 +137,14 @@ const Product = () => {
           </div>
         </section>
 
-        {/* Descrição e preço */}
         <section className="flex justify-end -my-96 mx-20 relative z-20">
           <div className="grid grid-cols-1 gap-4">
             <div className="grid grid-cols-1 gap-4">
               <h1 className="text-5xl font-bold bg-gradient-to-r from-black to-gray-400 bg-clip-text text-transparent -mt-9">
                 {product.nome}
               </h1>
-             
 
               <div className="flex flex-row gap-10">
-                {/* Seus ícones mantidos iguais */}
               </div>
             </div>
 
@@ -160,7 +152,7 @@ const Product = () => {
               <h1 className="py-2 text-2xl font-bold bg-gradient-to-r from-gray-600 to-green-500 bg-clip-text text-transparent">
                 A partir de {formatPrice(product.preco)}
               </h1>
-              <p className="py-1">
+              <p className="py-1 font-semibold">
                 ou 12x de R${" "}
                 {product.preco
                   ? (Number(product.preco) / 12).toFixed(2).replace(".", ",")
@@ -185,15 +177,15 @@ const Product = () => {
             </div>
 
             <ul className="py-5 text-2xl text-gray-600 bglist-none space-y-1">
-              <li><span className="text-blue-500 ri-truck-line"></span> Frete grátis para todo o Brasil</li>
-              <li><span className=" text-blue-500 ri-shield-line"></span> Garantia de 1 ano</li>
-              <li><span className="text-blue-500 ri-arrow-left-right-line"></span> Troca em até 7 dias</li>
+              <li><span className="text-black ri-truck-line"></span> Frete grátis para todo o Brasil</li>
+              <li><span className=" text-black ri-shield-line"></span> Garantia de 1 ano</li>
+              <li><span className="text-black ri-arrow-left-right-line"></span> Troca em até 7 dias</li>
             </ul>
           </div>
         </section>
 
         <section className="mx-10 relative -top-49">
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2" style={{ minHeight: '320px' }}>
             {imagens.map((img, idx) => (
               <div
                 key={idx}
@@ -214,11 +206,8 @@ const Product = () => {
           </div>
         </section>  
       </div>
-
-      {/* LAYOUT MOBILE - COMPLETAMENTE NOVO */}
-      <div className="block lg:hidden px-4 py-6">
-        {/* Imagem principal mobile */}
-        <div className="w-full aspect-square bg-white rounded-lg overflow-hidden shadow-lg mb-4">
+      <div className="block lg:hidden px-4 pb-20 -mb-20">
+        <div className="w-full aspect-square bg-white rounded-lg overflow-hidden shadow-lg mb-6">
           <img
             src={mainImage}
             className="w-full h-full object-contain"
@@ -226,8 +215,7 @@ const Product = () => {
           />
         </div>
 
-        {/* Thumbnails mobile */}
-        <div className="flex gap-2 overflow-x-auto pb-4 mb-6">
+        <div className="flex gap-2 overflow-x-auto pb-4 mb-8" style={{ minHeight: '64px' }}>
           {imagens.map((img, idx) => (
             <div
               key={idx}
@@ -246,16 +234,16 @@ const Product = () => {
           ))}
         </div>
 
-        {/* Informações do produto mobile */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-black to-gray-100 bg-clip-text text-transparent">
             {product.nome}
           </h1>
-          <div>
+          
+          <div className="space-y-2">
             <h2 className="text-xl font-bold bg-gradient-to-r from-gray-600 to-green-500 bg-clip-text text-transparent">
               A partir de {formatPrice(product.preco)}
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 font-semibold">
               ou 12x de R${" "}
               {product.preco
                 ? (Number(product.preco) / 12).toFixed(2).replace(".", ",")
@@ -263,35 +251,33 @@ const Product = () => {
             </p>
           </div>
 
-          {/* Botões mobile */}
           <div className="space-y-3">
             <button
-              className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-500 font-semibold"
+              className="w-full bg-green-600 text-white py-4 rounded-lg hover:bg-green-500 font-semibold text-lg"
               onClick={handleComprar}
             >
               Comprar
             </button>
 
             <button
-              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 font-semibold"
+              className="w-full bg-black text-white py-4 rounded-lg hover:bg-gray-900 font-semibold text-lg"
               onClick={handleAdicionarCarrinho}
             >
               Adicionar ao Carrinho
             </button>
           </div>
 
-          {/* Benefícios mobile */}
-          <ul className="space-y-2 text-gray-600 mt-6">
-            <li className="flex items-center gap-2">
-              <span className="text-blue-500 ri-truck-line"></span>
+          <ul className="text-gray-500 font-semibold space-y-3 pt-4">
+            <li className="flex items-center gap-3">
+              <span className="text-black ri-truck-line text-lg"></span>
               Frete grátis para todo o Brasil
             </li>
-            <li className="flex items-center gap-2">
-              <span className="text-blue-500 ri-shield-line"></span>
+            <li className="flex items-center gap-3">
+              <span className="text-black ri-shield-line text-lg"></span>
               Garantia de 1 ano
             </li>
-            <li className="flex items-center gap-2">
-              <span className="text-blue-500 ri-arrow-left-right-line"></span>
+            <li className="flex items-center gap-3">
+              <span className="text-black ri-arrow-left-right-line text-lg"></span>
               Troca em até 7 dias
             </li>
           </ul>

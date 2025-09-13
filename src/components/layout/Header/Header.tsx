@@ -49,7 +49,7 @@ const Header: React.FC = () => {
       setCarregando(true);
       
       try {
-        const response = await fetch(`http://localhost:3000/produtos/buscar?termo=${encodeURIComponent(termoBusca)}`);
+        const response = await fetch(`https://ecommerce-apple.onrender.com/produtos/buscar?termo=${encodeURIComponent(termoBusca)}`);
         
         if (!response.ok) {
           throw new Error(`Erro HTTP: ${response.status}`);
@@ -99,7 +99,7 @@ const Header: React.FC = () => {
           return;
         }
 
-        const response = await fetch('http://localhost:3000/usuarios', {
+        const response = await fetch('https://ecommerce-apple.onrender.com/usuarios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
